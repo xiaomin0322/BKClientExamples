@@ -1,0 +1,24 @@
+#!/bin/bash
+cd `dirname "$0"`/..
+
+case $1 in
+    w|WriteAndRead)
+        MAIN_CLASS=WriteAndRead
+        shift
+        ;;
+    d|DeleteLedgers)
+        MAIN_CLASS=DeleteLedgers
+        shift
+        ;;
+    m|MultiThreadRead)
+        MAIN_CLASS=MultiThreadRead
+        shift
+        ;;
+    * )
+        echo "Usage: $0 [w|WriteAndRead|d|DeleteLedgers|m|MultiThreadRead]"
+        exit 1
+        ;;
+esac
+
+PACKAGE=com.github.bewaremypower
+mvn exec:java -Dexec.mainClass=$PACKAGE.$MAIN_CLASS -Dlog4j.configuration=file:./src/main/resources/log4j.properties -Dexec.args="$*"

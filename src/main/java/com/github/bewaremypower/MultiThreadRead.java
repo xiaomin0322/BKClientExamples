@@ -22,7 +22,16 @@ public class MultiThreadRead {
         }
 
         final long ledgerId = Long.parseLong(args[0]);
+        if (ledgerId < 0) {
+            System.err.println("LedgerId (" + ledgerId + ") must be non-negative");
+            return;
+        }
         final int threadNum = (args.length > 1) ? Integer.parseInt(args[1]) : 8;
+        if (threadNum <= 0) {
+            System.err.println("ThreadNum (" + threadNum + ") must be positive");
+            return;
+        }
+        System.out.println("LedgerId: " + ledgerId + " ThreadNum: " + threadNum);
 
         try (BookKeeper bookKeeper = DefaultConfig.newBookKeeper()) {
             final ExecutorService threadPool = Executors.newFixedThreadPool(threadNum);

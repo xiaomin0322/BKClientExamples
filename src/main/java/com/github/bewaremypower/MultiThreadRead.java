@@ -7,6 +7,7 @@ import org.apache.bookkeeper.client.BookKeeper;
 import org.apache.bookkeeper.client.LedgerEntry;
 import org.apache.bookkeeper.client.LedgerHandle;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -42,12 +43,16 @@ public class MultiThreadRead {
                 threadPool.execute(() -> {
                     try (LedgerHandle ledgerHandle = DefaultConfig.openLedger(bookKeeper, ledgerId)) {
                         Enumeration<LedgerEntry> entries = ledgerHandle.readEntries(0, ledgerHandle.getLastAddConfirmed());
-                        StringBuilder builder = new StringBuilder();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         while (entries.hasMoreElements()) {
                             LedgerEntry entry = entries.nextElement();
-                            builder.append(entry.getEntry());
+                            try {
+                                stream.write(entry.getEntry());
+                            } catch (IOException e) {
+                                ExceptionUtil.handle(e, "[WARN] " + threadName);
+                            }
                         }
-                        System.out.println(threadName + ": " + Arrays.toString(builder.toString().getBytes()));
+                        System.out.println(threadName + ": " + Arrays.toString(stream.toByteArray()));
                     } catch (BKException | InterruptedException e) {
                         ExceptionUtil.handle(e, threadName);
                     } finally {

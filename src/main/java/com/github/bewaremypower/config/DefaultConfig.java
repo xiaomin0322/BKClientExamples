@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class DefaultConfig {
     // a comma separated string of "ip:port" that represents ZooKeeper servers
-    public static final String ZK_SERVERS = "10.209.243.104:2181";
+    public static final String ZK_SERVERS = "10.23.191.242:2181";
 
     // default ZooKeeper timeout
     public static final int ZK_TIMEOUT_MS = 1000;
@@ -38,8 +38,10 @@ public class DefaultConfig {
     public static BookKeeper newBookKeeper() throws BKException, InterruptedException, IOException {
         ClientConfiguration clientConfiguration = new ClientConfiguration()
                 .setZkTimeout(ZK_TIMEOUT_MS)
-                .setMetadataServiceUri("zk+null://" + ZK_SERVERS + "/ledgers");
-        return new BookKeeper(clientConfiguration);
+               .setMetadataServiceUri("zk+null://" + ZK_SERVERS + "/ledgers");
+       // .setZkServers(ZK_SERVERS);
+        //return new BookKeeper(clientConfiguration);
+        return new BookKeeper(ZK_SERVERS);
     }
 
     /**
@@ -50,7 +52,7 @@ public class DefaultConfig {
      * @throws InterruptedException
      */
     public static LedgerHandle createLedger(BookKeeper bookKeeper) throws BKException, InterruptedException {
-        return bookKeeper.createLedger(DIGEST_TYPE, PASSWORD);
+        return bookKeeper.createLedger(3,2,DIGEST_TYPE, PASSWORD);
     }
 
     /**

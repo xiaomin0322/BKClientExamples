@@ -30,5 +30,54 @@
         </dependency>
     </dependencies>
 
-
+   <build>
+	     <finalName>booktest</finalName> 
+		<plugins>
+		    <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>utf-8</encoding>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<!-- <mainClass>dataoke.ZhuCeSelenium</mainClass> -->
+									<!-- <mainClass>dataoke.Cmd</mainClass> -->
+									<!-- <mainClass>alimama.Main</mainClass>  -->
+									<mainClass>com.github.bewaremypower.WriteAndRead</mainClass>
+										<!--  <mainClass>dataoke.GetGoodIdsByDataoke</mainClass> -->
+									<!--  <mainClass>dataoke.GetGoodIdsByDataoke2</mainClass> -->
+									<!-- <mainClass>dataoke.ShuaOline</mainClass> -->
+									 <!-- <mainClass>dataoke.SendMail</mainClass>  -->
+									 <!-- <mainClass>taobao.Main</mainClass> -->
+									<!--  <mainClass>dataoke.CmdTestSelenium</mainClass> -->
+									<!-- <mainClass>dataoke.Monitor</mainClass>  -->
+								</transformer>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>META-INF/spring.handlers</resource>
+								</transformer>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>META-INF/spring.schemas</resource>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

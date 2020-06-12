@@ -46,7 +46,7 @@ public class WriteAndRead {
                         Enumeration<LedgerEntry> entries = ledgerForRead.readEntries(0, lastAddConfirmed);
                         while (entries.hasMoreElements()) {
                             LedgerEntry entry = entries.nextElement();
-                            System.out.println("[" + entry.getEntryId() + "]: " + Arrays.toString(entry.getEntry()));
+                            System.out.println("[" + entry.getEntryId() + "]: " + new String(entry.getEntry()));
                         }
                     } else {
                         System.out.println("Ledger " + ledgerForRead.getId() + " contains no entries");

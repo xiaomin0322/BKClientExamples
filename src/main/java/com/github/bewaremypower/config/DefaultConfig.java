@@ -8,6 +8,11 @@ import org.apache.bookkeeper.conf.ClientConfiguration;
 import java.io.IOException;
 
 /**
+ * 
+ * https://bookkeeper.apache.org/archives/docs/master/bookkeeperProgrammer.html
+ * https://bookkeeper.apache.org/docs/latest/api/ledger-api/
+ * https://bookkeeper.apache.org/docs/latest/api/ledger-adv-api/
+ * https://bookkeeper.apache.org/docs/latest/api/distributedlog-api/
  * Default config of BookKeeper/Ledger
  */
 public class DefaultConfig {

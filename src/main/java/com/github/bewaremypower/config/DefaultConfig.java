@@ -17,7 +17,14 @@ import java.io.IOException;
  */
 public class DefaultConfig {
     // a comma separated string of "ip:port" that represents ZooKeeper servers
-    public static final String ZK_SERVERS = "10.23.191.242:2181";
+    public static  String ZK_SERVERS = "127.0.0.1:2181";
+    
+    static {
+    	String s = System.getProperty("zk");
+    	if(s !=null) {
+    		ZK_SERVERS = s;
+    	}
+    }
 
     // default ZooKeeper timeout
     public static final int ZK_TIMEOUT_MS = 1000;
